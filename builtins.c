@@ -6,7 +6,7 @@
 /*   By: dmendelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 09:27:41 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/13 12:10:58 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/13 13:51:17 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,10 @@ void		ft_cd(char **args)
 		if (!opendir(args[1]))
 		{
 			g_err_num = CD_ERR;
+		}
+		else if (!ft_strcmp("-", args[1]))
+		{
+			//change to oldpwd
 		}
 		else
 		{

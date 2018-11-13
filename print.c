@@ -6,7 +6,7 @@
 /*   By: dmendelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 09:38:47 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/13 09:39:51 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/13 12:08:49 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void			print_args(char **strings, int p)
 		return ;
 	if (strings[p])
 	{
-		printf("%s ", strings[p]);
+		b_printf("%s ", strings[p]);
 	}
 	if (strings[p + 1])
 	{

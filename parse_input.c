@@ -6,7 +6,7 @@
 /*   By: dmendelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 09:36:10 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/13 09:36:44 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/13 13:06:10 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,132 +24,140 @@ int			count_args(char *s)
 		if (s[p] == ' ' || s[p] == '\t')
 		{
 			while (s[p] && (s[p] == ' ' || s[p] == '\t'))
-			{
 				p += 1;
-			}
 		}
 		else if (s[p] == '"')
 		{
 			count += 1;
 			p += 1;
 			while (s[p] && s[p] != '"')
-			{
 				p += 1;
-			}
 			p += 1;
 		}
 		else
 		{
 			count += 1;
 			while (s[p] && s[p] != ' ' && s[p] != '\t')
-			{
 				p += 1;
-			}
 		}
 	}
 	return (count);
 }
 
+int			expand(char **new, char *var, int p)
+{
+	*new = search_env(var);
+	return (p);
+}
+
 void		expand_tilde(char **tilde)
 {
-	WOW();
 	char			*tmp;
 	char			*new;
 	int				p;
 
 	if (!strncmp(*tilde, "~+", 2))
-	{
-		new = search_env("PWD");
-		p = 2;
-	}
+		p = expand(&new, "PWD", 2);
 	else if (!strncmp(*tilde, "~-", 2))
-	{
-		new = search_env("OLDPWD");
-		p = 2;
-	}
+		p = expand(&new, "OLDPWD", 2);
 	else
-	{
-		new = search_env("HOME");
-		p = 1;
-	}
-	printf("home = %s\n", new);
-	printf("p = %d\n", p);
-	printf("tilde = %s\n", *tilde);
+		p = expand(&new, "HOME", 1);
 	if (!(*tilde)[p])
 	{
-		printf("simple\n\n");
 		free(*tilde);
 		*tilde = new;
 	}
 	else if ((int)strlen(*tilde) > p && (*tilde)[p] == '/')
 	{
-		printf("hum\n\n");
 		tmp = ft_strdup_range(*tilde, ft_strchr_index(*tilde, '/'), strlen(*tilde) - 1);
-		printf("hum\n\n");
 		free(*tilde);
 		*tilde = trip_join(new, 0, tmp);
 		free(new);
 		free(tmp);
 	}
 	else
-	{
 		free(new);
+}
+
+char		*pull_literal(char *s, int *p)
+{
+	int				begin;
+	char			*string;
+
+	begin = ++(*p);
+	string = NULL;
+	while (s[*p] && s[*p] != '"')
+	{
+		*p += 1;
 	}
-	printf("--------expansion = %s\n", *tilde);
+	if (!s[*p])
+	{
+		g_err_num = PAREN;
+		return (NULL);
+	}
+	string = ft_strdup_range(s, begin, *p - 1);
+	*p += 1;
+	return (string);
+}
+
+char		*pull_word(char *s, int *p)
+{
+	int				begin;
+	char			*word;
+
+	begin = *p;
+	word = NULL;
+	while (s[*p] && s[*p] != ' ' && s[*p] != '\t')
+	{
+		*p += 1;
+	}
+	word = ft_strdup_range(s, begin, *p - 1);
+	return (word);
+}
+
+int			skip_whitespace(char *s, int p)
+{
+	while (s[p] && (s[p] == ' ' || s[p] == '\t'))
+	{
+		p += 1;
+	}
+	return (p);
+}
+
+char		**allocate_arguments(char *s)
+{
+	char			**strings;
+	int				arg_count;
+
+	arg_count = count_args(s);
+	strings = (char **)malloc(sizeof(*strings) * (arg_count + 1));
+	return (strings);
 }
 
 char		**split_stream(char *s)
 {
-	WOW();
 	char			**strings;
 	int				p;
 	int				sp;
-	int				arg_count;
-	int				begin;
 
-	arg_count = count_args(s);
-	printf("arg_count = %d\n", arg_count);
-	strings = malloc(sizeof(*strings) * (arg_count + 1));
+	strings = allocate_arguments(s);
 	p = 0;
 	sp = 0;
 	while (s[p])
 	{
-		printf("%s\n%*c\n", s, p - 1, s[p]);
 		if (s[p] == ' ' || s[p] == '\t')
-		{
-			while (s[p] && (s[p] == ' ' || s[p] == '\t'))
-			{
-				p += 1;
-			}
-		}
+			p = skip_whitespace(s, p);
 		else if (s[p] == '"')
 		{
-			begin = ++p;
-			while (s[p] && s[p] != '"')
-			{
-				p += 1;
-			}
-			if (!s[p])
-			{
-				g_err_num = PAREN;
-				return (write_error(MISSING_P, sizeof(MISSING_P)));
-			}
-			strings[sp] = ft_strdup_range(s, begin, p - 1);
-			printf("strings[%d] = %s\n", sp, strings[sp]);
+			if (!(strings[sp] = pull_literal(s, &p)))
+				return (NULL);
 			sp += 1;
-			p += 1;
 		}
 		else
 		{
-			begin = p;
-			while (s[p] && s[p] != ' ' && s[p] != '\t')
-			{
-				p += 1;
-			}
-			strings[sp] = ft_strdup_range(s, begin, p - 1);
+			strings[sp] = pull_word(s, &p);
 			if (strings[sp][0] == '~')
 				expand_tilde(&strings[sp]);
-			printf("strings[%d] = %s\n", sp, strings[sp]);
 			sp += 1;
 		}
 	}

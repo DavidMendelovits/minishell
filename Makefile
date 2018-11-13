@@ -6,7 +6,7 @@
 #    By: dmendelo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/13 09:03:30 by dmendelo          #+#    #+#              #
-#    Updated: 2018/11/13 10:37:29 by dmendelo         ###   ########.fr        #
+#    Updated: 2018/11/13 12:07:08 by dmendelo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ INC = -I . -I libft
 
 all: $(OBJ)
 		@make -C libft
-		@gcc -c $(SRC) $(CFLAGS) $(ASAN) $(INC)
+		@gcc -c $(SRC) $(CFLAGS) -g $(INC)
 		@gcc $(OBJ) $(CFLAGS) $(ASAN) $(LIBFT) -o $(NAME)
 		@echo "compiled!"
 

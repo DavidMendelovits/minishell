@@ -6,7 +6,7 @@
 /*   By: dmendelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 09:25:10 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/13 11:49:38 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/13 12:03:23 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		print_list(t_list *head)
 {
-	WOW();
+//	WOW();
 	t_list			*traverse;
 
 	traverse = head;
@@ -27,7 +27,7 @@ void		print_list(t_list *head)
 
 void		enqueue(t_list **head, char *content)
 {
-	WOW();
+//	WOW();
 	t_list			*new;
 	t_list			*traverse;
 
@@ -51,7 +51,7 @@ void		enqueue(t_list **head, char *content)
 
 t_list		*copy_extern_env(void)
 {
-	WOW();
+//	WOW();
 	t_list			*env;
 	int				p;
 
@@ -62,40 +62,15 @@ t_list		*copy_extern_env(void)
 		enqueue(&env, environ[p]);
 		p +=1 ;
 	}
-	print_list(env);
+//	print_list(env);
 	return (env);
 }
 
 void		init_env(void)
 {
-	WOW();
+//	WOW();
 	t_list			*env;
 	
 	env = copy_extern_env();
 	g_env = env;
 }
-/*
-void		init_env(void)
-{
-	WOW();
-	char			**env;
-	int				len;
-	int				p;
-
-	p = 0;
-	len = get_pointer_len(environ);
-	env = malloc(sizeof(*env) * (len + 1));
-	while (environ[p])
-	{
-		env[p] = strdup(environ[p]);
-		if (!strncmp(env[p], "PATH", 4))
-			g_PATH = env[p];
-		p += 1;
-	}
-	env[p] = NULL;
-	g_env = env;
-//	printf("g_env:\n");
-//	print_strings(g_env, 0);
-	printf("path @ %s\n", g_PATH);
-}
-*/

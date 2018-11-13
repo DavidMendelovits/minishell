@@ -6,7 +6,7 @@
 /*   By: dmendelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 09:27:41 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/13 11:45:14 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/13 12:10:58 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		ft_env(char **args)
 {
-	WOW();
+//	WOW();
 	if (args && args[1])
 	{
 		write(2, ARGS, sizeof(ARGS));
@@ -25,15 +25,15 @@ void		ft_env(char **args)
 
 void		ft_echo(char **args)
 {
-	WOW();
-	if (args[1])
+//	WOW();
+	if (args && args[1])
 		print_args(args, 1);
-	printf("\n");
+	b_printf("\n");
 }
 
 void		ft_cd(char **args)
 {
-	WOW();
+//	WOW();
 	int				argc;
 	char			buf[PATH_MAX];
 
@@ -64,7 +64,7 @@ void		ft_cd(char **args)
 
 int			is_builtin(char *arg1)
 {
-	WOW();
+//	WOW();
 	if (!strcmp(arg1, "echo"))
 	{
 		return (ECHO);
@@ -91,7 +91,7 @@ int			is_builtin(char *arg1)
 
 void		execute_builtin(int command, char **argv)
 {
-	WOW();
+//	WOW();
 	if (command == ECHO)
 	{
 		ft_echo(argv);

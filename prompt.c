@@ -6,7 +6,7 @@
 /*   By: dmendelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 09:23:56 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/13 10:38:53 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/13 12:55:08 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,11 @@ void		parse_input(char *input)
 	int				command;
 
 	args = split_stream(input);
-	//print_strings(args, 0);
+	if (!args)
+	{
+		write_error(MISSING_P, sizeof(MISSING_P));
+		return ;
+	}
 	if (!access(args[0], X_OK))
  		execute(args[0], args);
 	else if ((command = is_builtin(args[0])))

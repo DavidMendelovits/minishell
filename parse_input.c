@@ -6,7 +6,7 @@
 /*   By: dmendelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 09:36:10 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/13 13:06:10 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/13 13:48:04 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,33 @@ char		**allocate_arguments(char *s)
 	int				arg_count;
 
 	arg_count = count_args(s);
-	strings = (char **)malloc(sizeof(*strings) * (arg_count + 1));
+	strings = (char **)ft_memalloc(sizeof(*strings) * (arg_count + 1));
 	return (strings);
+}
+
+void		expand_dollar_sign(char **s)
+{
+	char			*tmp;
+	char			*new;
+
+	if (!(*s)[1])
+		return ;
+	tmp = ft_strdup_range(*s, 1, ft_strlen(*s));
+	expand(&new, tmp, 0);
+	free(tmp);
+	if (new)
+	{
+		free(*s);
+		*s = new;
+	}
+}
+
+void		expand_variable(char **s)
+{
+	if ((*s)[0] == '~')
+		expand_tilde(s);
+	else if ((*s)[0] == '$')
+		expand_dollar_sign(s);
 }
 
 char		**split_stream(char *s)
@@ -149,18 +174,16 @@ char		**split_stream(char *s)
 			p = skip_whitespace(s, p);
 		else if (s[p] == '"')
 		{
-			if (!(strings[sp] = pull_literal(s, &p)))
+			if (!(strings[sp++] = pull_literal(s, &p)))
 				return (NULL);
-			sp += 1;
 		}
 		else
 		{
 			strings[sp] = pull_word(s, &p);
-			if (strings[sp][0] == '~')
-				expand_tilde(&strings[sp]);
+			if (strings[sp][0] == '~' || strings[sp][0] == '$')
+				expand_variable(&strings[sp]);
 			sp += 1;
 		}
 	}
-	strings[sp] = NULL;
 	return (strings);
 }

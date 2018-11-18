@@ -6,7 +6,7 @@
 /*   By: dmendelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 09:23:56 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/13 20:11:29 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/15 11:28:30 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ void		read_line(void)
 	}
 	if (p > 0)
 	{
-		if (!strncmp(buffer, "quit", 4) || !strncmp(buffer, "exit", 4))
+		if (!ft_strncmp(buffer, "quit", 4) || !ft_strncmp(buffer, "exit", 4))
 			return ;
-		input = strdup(buffer);
+		input = ft_strdup(buffer);
 		parse_input(input);
 		free(input);
 	}

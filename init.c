@@ -6,7 +6,7 @@
 /*   By: dmendelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 09:25:10 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/13 12:03:23 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/15 09:54:44 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void		print_list(t_list *head)
 {
-//	WOW();
 	t_list			*traverse;
 
 	traverse = head;
@@ -27,7 +26,6 @@ void		print_list(t_list *head)
 
 void		enqueue(t_list **head, char *content)
 {
-//	WOW();
 	t_list			*new;
 	t_list			*traverse;
 
@@ -51,7 +49,6 @@ void		enqueue(t_list **head, char *content)
 
 t_list		*copy_extern_env(void)
 {
-//	WOW();
 	t_list			*env;
 	int				p;
 
@@ -62,13 +59,11 @@ t_list		*copy_extern_env(void)
 		enqueue(&env, environ[p]);
 		p +=1 ;
 	}
-//	print_list(env);
 	return (env);
 }
 
 void		init_env(void)
 {
-//	WOW();
 	t_list			*env;
 	
 	env = copy_extern_env();

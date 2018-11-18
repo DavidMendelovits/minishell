@@ -6,7 +6,7 @@
 /*   By: dmendelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 09:34:11 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/13 12:17:17 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/15 09:54:14 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,11 @@
 
 char		*search_env(char *name)
 {
-//	WOW();
 	t_list			*traverse;
 
 	traverse = g_env;
 	while (traverse)
 	{
-//		printf("checking...\n%s->\n%s\n", name, traverse->content);
 		if (!ft_strncmp(name, traverse->content, ft_strlen(name)))
 		{
 			return (ft_strdup_range(traverse->content,
@@ -34,7 +32,6 @@ char		*search_env(char *name)
 
 void		edit_env(char *name, char *value)
 {
-//	WOW();
 	t_list			*traverse;
 	char			*new;
 	int				overwrite;
@@ -48,7 +45,8 @@ void		edit_env(char *name, char *value)
 		{
 			new = trip_join(name, '=', value);
 			free(traverse->content);
-			traverse->content = new;
+			traverse->content = ft_strdup(new);
+			free(new);
 			if (!ft_strcmp(name, "PATH"))
 				g_PATH = traverse;
 			overwrite = 1;
@@ -56,7 +54,11 @@ void		edit_env(char *name, char *value)
 		traverse = traverse->next;
 	}
 	if (!overwrite)
-		enqueue(&g_env, trip_join(name, '=', value));
+	{
+		new = trip_join(name, '=', value);
+		enqueue(&g_env, new);
+		free(new);
+	}
 }
 
 void		ft_setenv(char **argv)

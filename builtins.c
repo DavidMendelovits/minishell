@@ -6,7 +6,7 @@
 /*   By: dmendelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 09:27:41 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/13 13:51:17 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/15 11:25:03 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void		ft_env(char **args)
 {
-//	WOW();
 	if (args && args[1])
 	{
 		write(2, ARGS, sizeof(ARGS));
@@ -25,7 +24,6 @@ void		ft_env(char **args)
 
 void		ft_echo(char **args)
 {
-//	WOW();
 	if (args && args[1])
 		print_args(args, 1);
 	b_printf("\n");
@@ -33,7 +31,6 @@ void		ft_echo(char **args)
 
 void		ft_cd(char **args)
 {
-//	WOW();
 	int				argc;
 	char			buf[PATH_MAX];
 

@@ -6,7 +6,7 @@
 /*   By: dmendelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/22 09:47:07 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/13 20:08:32 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/15 11:25:50 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 char		*replace_char(char *s, int old, int new)
 {
-//	WOW();
 	char			*ret;
 	int				p;
 
@@ -33,7 +32,6 @@ char		*replace_char(char *s, int old, int new)
 
 int			get_pointer_len(char **env)
 {
-//	WOW();
 	int				p;
 
 	p = 0;
@@ -46,7 +44,6 @@ int			get_pointer_len(char **env)
 
 void		free_2d(char **ptrs)
 {
-//	WOW();
 	int				p;
 	int				len;
 
@@ -61,6 +58,19 @@ void		free_2d(char **ptrs)
 	free(ptrs);
 }
 
+void		free_env(void)
+{
+	t_list			*tmp;
+
+	while (g_env)
+	{
+		tmp = g_env;
+		g_env = g_env->next;
+		free(tmp->content);
+		free(tmp);
+	}
+}
+
 int			main(void)
 {
 	DIR				*dirp;
@@ -68,9 +78,8 @@ int			main(void)
 
 	dirp = opendir(".");
 	entry = readdir(dirp);
-//	printf("%s\n", entry->d_name);
 	init_env();
 	read_line();
-	//free_2d(g_env);
+	free_env();
 	return (0);
 }

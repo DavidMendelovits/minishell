@@ -6,26 +6,28 @@
 /*   By: dmendelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/19 09:42:38 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/13 13:06:18 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/15 09:38:38 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <dirent.h>
-#include <signal.h>
-#include <strings.h>
-#include <string.h>
-#include <assert.h>
-#include "libft/libft.h"
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-#define WOW() printf("->%s\n", __func__)
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <dirent.h>
+# include <signal.h>
+# include <strings.h>
+# include <string.h>
+# include <assert.h>
+# include "libft/libft.h"
+
+# define WOW() printf("->%s\n", __func__)
 
 extern char	**environ;
-
 
 typedef struct 		s_list
 {
@@ -34,7 +36,6 @@ typedef struct 		s_list
 }					t_list;
 
 t_list		*g_PATH;
-//char		**g_env;
 t_list		*g_env;
 
 
@@ -116,3 +117,4 @@ char			*search_path_directories(char *command);
 
 void			print_args(char **strings, int p);
 void			print_strings(char **strings, int p);
+#endif

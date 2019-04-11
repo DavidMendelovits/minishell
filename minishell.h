@@ -65,7 +65,7 @@ typedef enum
 	CD_ARGS
 }		t_errors;
 
-#define PATH_MAX 1024
+//#define PATH_MAX 1024
 #define INVALID_P "Error! -> Invalid Parameteres\n"
 #define MISSING_P "Error! -> missing parenthesis\n"
 #define INVALID_COMMAND "Error! -> Invalid Command\n"

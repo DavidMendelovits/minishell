@@ -74,12 +74,13 @@ void		free_env(void)
 int			main(void)
 {
 	DIR				*dirp;
-	struct dirent 	*entry;
+//	struct dirent 	*entry;
 
 	dirp = opendir(".");
-	entry = readdir(dirp);
+//	entry = readdir(dirp);
 	init_env();
 	read_line();
 	free_env();
+	free(dirp);
 	return (0);
 }
